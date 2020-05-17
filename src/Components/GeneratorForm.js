@@ -13,43 +13,31 @@ import './GeneratorForm.css';
 const backgroundImages = [
     {
         title: 'background1',
-        width: '8rem',
-        height: '5rem',
         url: background1,
         picked: true,
     },
     {
         title: 'background2',
-        width: '8rem',
-        height: '5rem',
         url: background2,
         picked: false,
     },
     {
         title: 'background3',
-        width: '8rem',
-        height: '5rem',
         url: background3,
         picked: false,
     },
     {
         title: 'background4',
-        width: '8rem',
-        height: '5rem',
         url: background4,
         picked: false,
     },
     {
         title: 'background5',
-        width: '8rem',
-        height: '5rem',
         url: background5,
         picked: false,
     },
     {
         title: 'background6',
-        width: '8rem',
-        height: '5rem',
         url: background6,
         picked: false,
     },

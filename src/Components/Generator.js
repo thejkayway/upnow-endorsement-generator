@@ -7,8 +7,11 @@ class Generator extends React.Component {
 
     render() {
         return <div className="Generator">
-            <Stage width={this.props.imageSize} height={this.props.imageSize}>
-                <Layer>
+            <Stage
+                width={this.props.imageSize}
+                height={this.props.imageSize}>
+                <Layer
+                    ref={this.props.forwardRef}>
                     <Rect
                         x={0}
                         y={0}
@@ -101,4 +104,4 @@ class Generator extends React.Component {
         </div>
     }
 }
-export default Generator;
+export default React.forwardRef((props, ref) => <Generator {...props} forwardRef={ref}/>);

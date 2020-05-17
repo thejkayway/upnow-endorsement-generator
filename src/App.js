@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import './App.css';
@@ -20,21 +21,83 @@ const theme = createMuiTheme({
         }
     }
 });
+const IMAGE_SIZE = {
+    tiny: 250,
+    small: 350,
+    medium: 400,
+    large: 500
+};
+const IMAGE_DOWNLOAD_SIZE = 1024;
+const DOWNLOAD_NAME = 'endorsement.png';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
+        let imageSize = this.determineCanvasSize(window.innerWidth);
         this.state = {
             name: 'Rosa Luxemburg',
             location: 'Portland, OR',
             message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tmpor incididunt ut labore et dolore magna aliqa. Ut enim ad minim venium, quis nostrud.',
             backgroundImagePath: defaultBackgroundPath,
-            avatarImagePath: defaultAvatarPath
+            avatarImagePath: defaultAvatarPath,
+            imageSize: imageSize
+        }
+        this.canvasRef = React.createRef();
+        this.downloadRef = React.createRef();
+    }
+
+    componentDidMount() {
+        window.addEventListener('resize', this.handleResize);
+    }
+
+    determineCanvasSize = (windowWidth) => {
+        if (windowWidth > 1400) {
+            return IMAGE_SIZE.large;
+        }
+        if (windowWidth > 1100 && windowWidth <= 1400) {
+            return IMAGE_SIZE.medium;
+        }
+        if (windowWidth > 600 && windowWidth <= 1100) {
+            return IMAGE_SIZE.small;
+        }
+        if (windowWidth <= 600) {
+            return IMAGE_SIZE.tiny;
         }
     }
 
-    downloadHandler = () => {
-        // get image
+    downloadHandler = async () => {
+        let generator = <Generator
+            imageSize={IMAGE_DOWNLOAD_SIZE}
+            ref={this.downloadRef}
+            name={this.state.name}
+            location={this.state.location}
+            message={this.state.message}
+            backgroundImagePath={this.state.backgroundImagePath}
+            avatarImagePath={this.state.avatarImagePath} />;
+        let invisibleHolder = document.createElement('div');
+        ReactDOM.render(generator, invisibleHolder);
+        await this.sleep(100); // this sucks. Generator component should register listeners and callback when loading complete
+        
+        let layer = this.downloadRef.current;
+        this.downloadFromURI(layer.toDataURL());
+    };
+
+    downloadFromURI = (uri) => {
+        let link = document.createElement('a');
+        link.download = DOWNLOAD_NAME;
+        link.href = uri;
+        link.click();
+    };
+
+    handleResize = () => {
+        let previousSize = this.state.imageSize;
+        let newSize = this.determineCanvasSize(window.innerWidth);
+        if (previousSize !== newSize) {
+            console.log(window.innerWidth)
+            console.log('changing size from ' + previousSize + ' to ' + newSize);
+            this.setState({imageSize: newSize});
+        }
+        //this.setState({imageSize: this.determineCanvasSize(window.innerWidth)});
     };
 
     updateGenerator = (data) => {
@@ -46,6 +109,10 @@ class App extends React.Component {
         newState.backgroundImagePath = background;
         this.setState(newState);
     };
+
+    sleep = (ms) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
     render() {
         return <ThemeProvider theme={theme}>
@@ -64,7 +131,8 @@ class App extends React.Component {
                     </div>
                     <div className="Generator">
                         <Generator
-                            imageSize={300}
+                            imageSize={this.state.imageSize}
+                            ref={this.canvasRef}
                             name={this.state.name}
                             location={this.state.location}
                             message={this.state.message}

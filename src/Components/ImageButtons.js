@@ -6,16 +6,16 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
-        minWidth: 300,
-        width: '100%',
+        minWidth: '100%',
     },
     image: {
         position: 'relative',
-        height: 200,
+        width: '45%',
+        height: '5rem',
         margin: '0.2rem',
         [theme.breakpoints.down('xs')]: {
-            width: '100% !important', // Overrides inline-style
-            height: 100,
+            width: '4rem',
+            height: '3rem'
         },
         '&:hover, &$focusVisible': {
             zIndex: 1,
@@ -67,6 +67,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'rgba(255,255,255,0.2)',
         transition: theme.transitions.create('opacity'),
         border: '7px solid ' + theme.palette.secondary.main,
+        [theme.breakpoints.down('xs')]: {
+            border: '3px solid ' + theme.palette.secondary.main,
+        },
     },
 }));
 
@@ -81,10 +84,6 @@ export default function ImageButtons(props) {
                     key={image.title}
                     className={classes.image}
                     focusVisibleClassName={classes.focusVisible}
-                    style={{
-                        width: image.width,
-                        height: image.height,
-                    }}
                     onClick={props.pickHandler}>
                     <span
                         className={classes.imageSrc}
