@@ -70,7 +70,7 @@ class GeneratorForm extends React.Component {
 
     onPickBackground = event => {
         for (let node of event.target.parentElement.childNodes) {
-            if (node.className.includes('imageSrc')) {
+            if (node.style.backgroundImage) {
                 let imageName = node.style.backgroundImage.split('/').pop().split('.')[0];
                 for (let image of backgroundImages) {
                     if (image.title.localeCompare(imageName) === 0) {
