@@ -119,7 +119,7 @@ class App extends React.Component {
     render() {
         return <ThemeProvider theme={theme}>
             <div className='App'>
-                <header className='App-header'>
+                <header className='App-header' style={{backgroundColor:theme.palette.primary.dark}}>
                     <img src={logo} className='App-logo' alt='logo' />
                     <h2 className='App-title'>
                         I support Universal Preschool NOW!
