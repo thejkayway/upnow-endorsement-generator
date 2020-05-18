@@ -52,7 +52,6 @@ class GeneratorForm extends React.Component {
     }
 
     handleSubmit = event => {
-        event.preventDefault();
         let {name, location, message} = this.state;
         let background = this.state.images.filter(image=>image.picked)[0].url;
         let data = {name, location, message, background};
@@ -72,7 +71,7 @@ class GeneratorForm extends React.Component {
     onPickBackground = event => {
         for (let node of event.target.parentElement.childNodes) {
             if (node.className.includes('imageSrc')) {
-                let imageName = node.style["background-image"].split('/')[3].split('.')[0];
+                let imageName = node.style.backgroundImage.split('/').pop().split('.')[0];
                 for (let image of backgroundImages) {
                     if (image.title.localeCompare(imageName) === 0) {
                         image.picked = true;

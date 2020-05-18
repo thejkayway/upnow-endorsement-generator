@@ -73,13 +73,10 @@ class App extends React.Component {
             location={this.state.location}
             message={this.state.message}
             backgroundImagePath={this.state.backgroundImagePath}
-            avatarImagePath={this.state.avatarImagePath} />;
+            avatarImagePath={this.state.avatarImagePath}
+            doneLoadingImages={this.downloadStarter}/>;
         let invisibleHolder = document.createElement('div');
         ReactDOM.render(generator, invisibleHolder);
-        await this.sleep(100); // this sucks. Generator component should register listeners and callback when loading complete
-        
-        let layer = this.downloadRef.current;
-        this.downloadFromURI(layer.toDataURL());
     };
 
     downloadFromURI = (uri) => {
@@ -88,6 +85,11 @@ class App extends React.Component {
         link.href = uri;
         link.click();
     };
+
+    downloadStarter = () => {
+        let layer = this.downloadRef.current;
+        this.downloadFromURI(layer.toDataURL());
+    }
 
     handleResize = () => {
         let previousSize = this.state.imageSize;

@@ -4,6 +4,26 @@ import URLImage from './Konva/URLImage';
 import flagPath from '../resources/generator/images/flag.png'
 
 class Generator extends React.Component {
+    constructor(props) {
+        super(props);
+        this.imageCount = 0;
+    }
+
+    doneLoadingImages = () => {
+        return this.imageCount === 0;
+    }
+
+    startLoadImage = () => {
+        this.imageCount += 1;
+    }
+
+    finishLoadImage = () => {
+        this.imageCount -= 1;
+        if(this.doneLoadingImages() && this.props.doneLoadingImages) {
+            console.log('done');
+            this.props.doneLoadingImages();
+        }
+    };
 
     render() {
         return <div className="Generator">
@@ -23,7 +43,9 @@ class Generator extends React.Component {
                         y={0}
                         width={this.props.imageSize}
                         height={this.props.imageSize / 2}
-                        src={this.props.backgroundImagePath}/>
+                        src={this.props.backgroundImagePath}
+                        startLoad={this.startLoadImage}
+                        finishLoad={this.finishLoadImage}/>
                     <Rect
                         x={0}
                         y={0}
@@ -35,7 +57,9 @@ class Generator extends React.Component {
                         y={this.props.imageSize * 0.0391}
                         width={this.props.imageSize * 0.3125}
                         height={this.props.imageSize * 0.3125}
-                        src={this.props.avatarImagePath}/>
+                        src={this.props.avatarImagePath}
+                        startLoad={this.startLoadImage}
+                        finishLoad={this.finishLoadImage}/>
                     <Circle
                         x={this.props.imageSize * 0.1953}
                         y={this.props.imageSize * 0.1953}
@@ -47,7 +71,9 @@ class Generator extends React.Component {
                         y={this.props.imageSize / 2 - this.props.imageSize * 0.0879}
                         width={this.props.imageSize * 0.9375}
                         height={this.props.imageSize * 0.1758}
-                        src={flagPath}/>
+                        src={flagPath}
+                        startLoad={this.startLoadImage}
+                        finishLoad={this.finishLoadImage}/>
                     <Text
                         text={this.props.name}
                         x={this.props.imageSize * 0.05859}
