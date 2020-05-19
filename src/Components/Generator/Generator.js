@@ -28,7 +28,7 @@ class Generator extends React.Component {
         const {
             name,
             imageSize,
-            location,
+            title,
             message,
             forwardRef,
             backgroundImagePath,
@@ -119,7 +119,7 @@ class Generator extends React.Component {
                                 preventDefault={false}
                             />
                             <Text
-                                text={location}
+                                text={title}
                                 fontSize={imageSize * 0.0391}
                                 fontFamily="Nunito"
                                 fontStyle="italic bold"
@@ -171,7 +171,7 @@ class Generator extends React.Component {
 Generator.propTypes = {
     name: PropTypes.string.isRequired,
     imageSize: PropTypes.number.isRequired,
-    location: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired,
     forwardRef: PropTypes.shape({ current: PropTypes.any }).isRequired,
     backgroundImagePath: PropTypes.string.isRequired,

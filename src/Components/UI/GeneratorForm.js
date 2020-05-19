@@ -53,12 +53,12 @@ class GeneratorForm extends React.Component {
     }
 
     handleSubmit = (event, newImageState) => {
-        const { name, location, message } = this.state;
+        const { name, title, message } = this.state;
         const { images } = newImageState || this.state;
         const { updateGenerator } = this.props;
 
         const background = images.filter((image) => image.picked)[0].url;
-        const data = { name, location, message, background };
+        const data = { name, title, message, background };
         data[event.target.name] = event.target.value;
         updateGenerator(data);
     }
@@ -106,9 +106,9 @@ class GeneratorForm extends React.Component {
                     />
                 </div>
                 <div className="Generator-form-textEntry">
-                    <span className="Generator-form-label">Location or Title</span>
+                    <span className="Generator-form-label">Title</span>
                     <TextField
-                        name="location"
+                        name="title"
                         variant="outlined"
                         size="small"
                         onChange={this.handleChange}

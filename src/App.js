@@ -36,7 +36,7 @@ class App extends React.Component {
         const imageSize = this.determineCanvasSize(window.innerWidth);
         this.state = {
             name: 'Rosa Luxemburg',
-            location: 'Portland, OR',
+            title: 'Activist',
             message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tmpor incididunt ut labore et dolore magna aliqa. Ut enim ad minim venium, quis nostrud.',
             backgroundImagePath: defaultBackgroundPath,
             avatarImagePath: defaultAvatarPath,
@@ -68,14 +68,14 @@ class App extends React.Component {
 
     downloadHandler = async () => {
         const {
-            name, location, message, backgroundImagePath, avatarImagePath,
+            name, title, message, backgroundImagePath, avatarImagePath,
         } = this.state;
         const generator = (
             <Generator
                 imageSize={IMAGE_DOWNLOAD_SIZE}
                 ref={this.downloadRef}
                 name={name}
-                location={location}
+                title={title}
                 message={message}
                 backgroundImagePath={backgroundImagePath}
                 avatarImagePath={avatarImagePath}
@@ -109,10 +109,10 @@ class App extends React.Component {
     updateGenerator = (data) => {
         const newState = {};
         const {
-            name, location, message, background,
+            name, title, message, background,
         } = data;
         if (name) { newState.name = name; }
-        if (location) { newState.location = location; }
+        if (title) { newState.title = title; }
         if (message) { newState.message = message; }
         newState.backgroundImagePath = background;
         this.setState(newState);
@@ -120,7 +120,7 @@ class App extends React.Component {
 
     render() {
         const {
-            imageSize, name, location, message, backgroundImagePath, avatarImagePath,
+            imageSize, name, title, message, backgroundImagePath, avatarImagePath,
         } = this.state;
         return (
             <ThemeProvider theme={theme}>
@@ -142,7 +142,7 @@ class App extends React.Component {
                                 imageSize={imageSize}
                                 ref={this.canvasRef}
                                 name={name}
-                                location={location}
+                                title={title}
                                 message={message}
                                 backgroundImagePath={backgroundImagePath}
                                 avatarImagePath={avatarImagePath}
