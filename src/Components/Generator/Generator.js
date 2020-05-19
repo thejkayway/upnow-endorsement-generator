@@ -49,6 +49,7 @@ class Generator extends React.Component {
                             height={imageSize}
                             width={imageSize}
                             fill="rgb(251, 228, 171)"
+                            preventDefault={false}
                         />
                         <URLImage
                             x={0}
@@ -58,6 +59,7 @@ class Generator extends React.Component {
                             src={backgroundImagePath}
                             startLoad={this.startLoadImage}
                             finishLoad={this.finishLoadImage}
+                            preventDefault={false}
                         />
                         <Rect
                             x={0}
@@ -65,6 +67,7 @@ class Generator extends React.Component {
                             width={imageSize}
                             height={imageSize / 2}
                             fill="rgba(235, 195, 71, 0.3)"
+                            preventDefault={false}
                         />
                         <URLImage
                             x={imageSize * 0.0391}
@@ -74,6 +77,7 @@ class Generator extends React.Component {
                             src={avatarImagePath}
                             startLoad={this.startLoadImage}
                             finishLoad={this.finishLoadImage}
+                            preventDefault={false}
                         />
                         <Circle
                             x={imageSize * 0.1953}
@@ -81,6 +85,7 @@ class Generator extends React.Component {
                             radius={imageSize * 0.15625}
                             stroke="white"
                             strokeWidth={imageSize * 0.01172}
+                            preventDefault={false}
                         />
                         <URLImage
                             x={imageSize * 0.01953}
@@ -90,6 +95,7 @@ class Generator extends React.Component {
                             src={flagPath}
                             startLoad={this.startLoadImage}
                             finishLoad={this.finishLoadImage}
+                            preventDefault={false}
                         />
                         <Text
                             text={name}
@@ -101,13 +107,16 @@ class Generator extends React.Component {
                             fill="white"
                             stroke="rgb(214,84,42)"
                             strokeWidth={imageSize * 0.00352}
+                            preventDefault={false}
                         />
                         <Label
                             x={imageSize * 0.0488}
                             y={imageSize * 0.3223}
+                            preventDefault={false}
                         >
                             <Tag
                                 fill="black"
+                                preventDefault={false}
                             />
                             <Text
                                 text={location}
@@ -117,6 +126,7 @@ class Generator extends React.Component {
                                 fill="white"
                                 padding={imageSize * 0.00977}
                                 wrap="word"
+                                preventDefault={false}
                             />
                         </Label>
                         <Text
@@ -129,6 +139,7 @@ class Generator extends React.Component {
                             fill="white"
                             stroke="rgb(214,84,42)"
                             strokeWidth={imageSize * 0.00195}
+                            preventDefault={false}
                         />
                         <Text
                             text={`"${message}"`}
@@ -140,6 +151,7 @@ class Generator extends React.Component {
                             fontStyle="italic"
                             fill="rgb(60,60,60)"
                             wrap="word"
+                            preventDefault={false}
                         />
                         <Text
                             text="Sign the petition at upnow2020.org"
@@ -148,6 +160,7 @@ class Generator extends React.Component {
                             fontSize={imageSize * 0.043}
                             fontFamily="Nunito"
                             fontStyle="italic"
+                            preventDefault={false}
                         />
                     </Layer>
                 </Stage>
