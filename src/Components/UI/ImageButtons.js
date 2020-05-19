@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
         margin: '0.2rem',
         [theme.breakpoints.down('xs')]: {
             width: '4rem',
-            height: '3rem'
+            height: '3rem',
         },
         '&:hover, &$focusVisible': {
             zIndex: 1,
@@ -66,33 +67,43 @@ const useStyles = makeStyles((theme) => ({
         bottom: 0,
         backgroundColor: 'rgba(255,255,255,0.2)',
         transition: theme.transitions.create('opacity'),
-        border: '7px solid ' + theme.palette.secondary.main,
+        border: `7px solid ${theme.palette.secondary.main}`,
         [theme.breakpoints.down('xs')]: {
-            border: '3px solid ' + theme.palette.secondary.main,
+            border: `3px solid ${theme.palette.secondary.main}`,
         },
     },
 }));
 
-export default function ImageButtons(props) {
+function ImageButtons(props) {
     const classes = useStyles();
+    const { images, pickHandler } = props;
 
     return (
         <div className={classes.root}>
-            {props.images.map((image) => (
+            {images.map((image) => (
                 <ButtonBase
                     focusRipple
                     key={image.title}
                     className={classes.image}
                     focusVisibleClassName={classes.focusVisible}
-                    onClick={props.pickHandler}>
+                    onClick={pickHandler}
+                >
                     <span
                         className={classes.imageSrc}
                         style={{
                             backgroundImage: `url(${image.url})`,
-                        }} />
+                        }}
+                    />
                     <span className={image.picked ? classes.imageMarked : classes.imageBackdrop} />
                 </ButtonBase>
             ))}
         </div>
     );
 }
+
+ImageButtons.propTypes = {
+    images: PropTypes.arrayOf(PropTypes.object).isRequired,
+    pickHandler: PropTypes.func.isRequired,
+};
+
+export default ImageButtons;

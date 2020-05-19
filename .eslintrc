@@ -1,0 +1,16 @@
+{
+    "parser": "babel-eslint",
+    "rules" : {
+        "indent": ["error", 4],
+        "object-curly-newline": ["error", {
+            "ImportDeclaration": "never",
+        }],
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "react/jsx-indent": ["error", 4],
+        "react/jsx-indent-props": ["error", 4]
+    },
+    "extends": ["airbnb", "airbnb/hooks"],
+    "env": {
+        "browser": true
+      }
+}

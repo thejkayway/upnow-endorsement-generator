@@ -4,8 +4,8 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import './App.css';
 
-import GeneratorForm from './Components/GeneratorForm';
-import Generator from './Components/Generator';
+import GeneratorForm from './Components/UI/GeneratorForm';
+import Generator from './Components/Generator/Generator';
 
 import logo from './resources/logo.png';
 import defaultAvatarPath from './resources/generator/images/defaultAvatar.png';
@@ -14,18 +14,18 @@ import defaultBackgroundPath from './resources/generator/images/background1.png'
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#484c54'
+            main: '#484c54',
         },
         secondary: {
-            main: '#838b9c'
-        }
-    }
+            main: '#838b9c',
+        },
+    },
 });
 const IMAGE_SIZE = {
     tiny: 250,
     small: 350,
     medium: 400,
-    large: 500
+    large: 500,
 };
 const IMAGE_DOWNLOAD_SIZE = 1024;
 const DOWNLOAD_NAME = 'endorsement.png';
@@ -33,15 +33,15 @@ const DOWNLOAD_NAME = 'endorsement.png';
 class App extends React.Component {
     constructor(props) {
         super(props);
-        let imageSize = this.determineCanvasSize(window.innerWidth);
+        const imageSize = this.determineCanvasSize(window.innerWidth);
         this.state = {
             name: 'Rosa Luxemburg',
             location: 'Portland, OR',
             message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tmpor incididunt ut labore et dolore magna aliqa. Ut enim ad minim venium, quis nostrud.',
             backgroundImagePath: defaultBackgroundPath,
             avatarImagePath: defaultAvatarPath,
-            imageSize: imageSize
-        }
+            imageSize,
+        };
         this.canvasRef = React.createRef();
         this.downloadRef = React.createRef();
     }
@@ -63,48 +63,54 @@ class App extends React.Component {
         if (windowWidth <= 600) {
             return IMAGE_SIZE.tiny;
         }
+        return IMAGE_SIZE.medium;
     }
 
     downloadHandler = async () => {
-        let generator = <Generator
-            imageSize={IMAGE_DOWNLOAD_SIZE}
-            ref={this.downloadRef}
-            name={this.state.name}
-            location={this.state.location}
-            message={this.state.message}
-            backgroundImagePath={this.state.backgroundImagePath}
-            avatarImagePath={this.state.avatarImagePath}
-            doneLoadingImages={this.downloadStarter}/>;
-        let invisibleHolder = document.createElement('div');
+        const {
+            name, location, message, backgroundImagePath, avatarImagePath,
+        } = this.state;
+        const generator = (
+            <Generator
+                imageSize={IMAGE_DOWNLOAD_SIZE}
+                ref={this.downloadRef}
+                name={name}
+                location={location}
+                message={message}
+                backgroundImagePath={backgroundImagePath}
+                avatarImagePath={avatarImagePath}
+                doneLoadingImages={this.downloadStarter}
+            />
+        );
+        const invisibleHolder = document.createElement('div');
         ReactDOM.render(generator, invisibleHolder);
     };
 
     downloadFromURI = (uri) => {
-        let link = document.createElement('a');
+        const link = document.createElement('a');
         link.download = DOWNLOAD_NAME;
         link.href = uri;
         link.click();
     };
 
     downloadStarter = () => {
-        let layer = this.downloadRef.current;
+        const layer = this.downloadRef.current;
         this.downloadFromURI(layer.toDataURL());
     }
 
     handleResize = () => {
-        let previousSize = this.state.imageSize;
-        let newSize = this.determineCanvasSize(window.innerWidth);
+        const { imageSize: previousSize } = this.state;
+        const newSize = this.determineCanvasSize(window.innerWidth);
         if (previousSize !== newSize) {
-            console.log(window.innerWidth)
-            console.log('changing size from ' + previousSize + ' to ' + newSize);
-            this.setState({imageSize: newSize});
+            this.setState({ imageSize: newSize });
         }
-        //this.setState({imageSize: this.determineCanvasSize(window.innerWidth)});
     };
 
     updateGenerator = (data) => {
-        let newState = {};
-        let { name, location, message, background } = data;
+        const newState = {};
+        const {
+            name, location, message, background,
+        } = data;
         if (name) { newState.name = name; }
         if (location) { newState.location = location; }
         if (message) { newState.message = message; }
@@ -112,47 +118,50 @@ class App extends React.Component {
         this.setState(newState);
     };
 
-    sleep = (ms) => {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
     render() {
-        return <ThemeProvider theme={theme}>
-            <div className='App'>
-                <header className='App-header' style={{backgroundColor:theme.palette.primary.dark}}>
-                    <img src={logo} className='App-logo' alt='logo' />
-                    <h2 className='App-title'>
-                        I support Universal Preschool NOW!
-                    </h2>
-                </header>
-                <div className="Content">
-                    <div className="Config">
-                        <GeneratorForm
-                            updateGenerator={this.updateGenerator}
-                        />
-                    </div>
-                    <div className="Generator">
-                        <Generator
-                            imageSize={this.state.imageSize}
-                            ref={this.canvasRef}
-                            name={this.state.name}
-                            location={this.state.location}
-                            message={this.state.message}
-                            backgroundImagePath={this.state.backgroundImagePath}
-                            avatarImagePath={this.state.avatarImagePath} />
-                        <div className="Download">
-                            <Button
-                                variant="contained"
-                                size="large"
-                                color="primary"
-                                onClick={this.downloadHandler}>
-                                Download
-                            </Button>
+        const {
+            imageSize, name, location, message, backgroundImagePath, avatarImagePath,
+        } = this.state;
+        return (
+            <ThemeProvider theme={theme}>
+                <div className="App">
+                    <header className="App-header" style={{ backgroundColor: theme.palette.primary.dark }}>
+                        <img src={logo} className="App-logo" alt="logo" />
+                        <h2 className="App-title">
+                            I support Universal Preschool NOW!
+                        </h2>
+                    </header>
+                    <div className="Content">
+                        <div className="Config">
+                            <GeneratorForm
+                                updateGenerator={this.updateGenerator}
+                            />
+                        </div>
+                        <div className="Generator">
+                            <Generator
+                                imageSize={imageSize}
+                                ref={this.canvasRef}
+                                name={name}
+                                location={location}
+                                message={message}
+                                backgroundImagePath={backgroundImagePath}
+                                avatarImagePath={avatarImagePath}
+                            />
+                            <div className="Download">
+                                <Button
+                                    variant="contained"
+                                    size="large"
+                                    color="primary"
+                                    onClick={this.downloadHandler}
+                                >
+                                    Download
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </ThemeProvider>
+            </ThemeProvider>
+        );
     }
 }
 
