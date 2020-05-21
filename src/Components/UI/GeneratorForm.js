@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, TextField } from '@material-ui/core';
+import { Input, TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import ImageButtons from './ImageButtons';
 import background1 from '../../resources/generator/images/background1.png';
@@ -52,15 +52,34 @@ class GeneratorForm extends React.Component {
         };
     }
 
-    handleSubmit = (event, newImageState) => {
-        const { name, title, message } = this.state;
-        const { images } = newImageState || this.state;
+    handleSubmit = (event, newBackgroundImageState) => {
+        const { name, title, message, avatar } = this.state;
+        const { images } = newBackgroundImageState || this.state;
         const { updateGenerator } = this.props;
 
         const background = images.filter((image) => image.picked)[0].url;
-        const data = { name, title, message, background };
-        data[event.target.name] = event.target.value;
-        updateGenerator(data);
+        const data = { name, title, message, background, avatar };
+        if (event.target.name) {
+            data[event.target.name] = event.target.value;
+        }
+        data.avatar = avatar;
+
+        if (event.target.files) {
+            // user just sent an avatar, create a dom element for it
+            const [file] = event.target.files;
+            const reader = new FileReader();
+            const img = new Image();
+            reader.onload = () => {
+                img.src = reader.result;
+                data.avatar = img;
+                this.setState({ avatar: img });
+                updateGenerator(data);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // user just sent text field or background image change
+            updateGenerator(data);
+        }
     }
 
     handleChange = (event) => {
@@ -133,14 +152,15 @@ class GeneratorForm extends React.Component {
                 </div>
                 <div className="Generator-form-avatarEntry">
                     <span className="Generator-form-label">Photo of you</span>
-                    <Button
-                        type="button"
-                        variant="outlined"
-                        size="small"
-                        color="primary"
-                    >
-                        Browse...
-                    </Button>
+                    <Input
+                        name="avatar"
+                        type="file"
+                        accept="image/*"
+                        multiple={false}
+                        variant="contained"
+                        disableUnderline
+                        onChange={this.handleChange}
+                    />
                 </div>
             </form>
         );

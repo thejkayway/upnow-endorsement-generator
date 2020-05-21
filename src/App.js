@@ -34,12 +34,21 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         const imageSize = this.determineCanvasSize(window.innerWidth);
+        const defaultAvatar = {
+            x: imageSize * 0.0391,
+            y: imageSize * 0.0391,
+            width: imageSize * 0.3125,
+            height: imageSize * 0.3125,
+            id: 'avatar',
+            draggable: true,
+        };
         this.state = {
             name: 'Rosa Luxemburg',
             title: 'Activist',
             message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tmpor incididunt ut labore et dolore magna aliqa. Ut enim ad minim venium, quis nostrud.',
             backgroundImagePath: defaultBackgroundPath,
             avatarImagePath: defaultAvatarPath,
+            avatarState: defaultAvatar,
             imageSize,
         };
         this.canvasRef = React.createRef();
@@ -68,7 +77,7 @@ class App extends React.Component {
 
     downloadHandler = async () => {
         const {
-            name, title, message, backgroundImagePath, avatarImagePath,
+            name, title, message, backgroundImagePath, avatarImagePath, avatarState, imageSize,
         } = this.state;
         const generator = (
             <Generator
@@ -79,6 +88,7 @@ class App extends React.Component {
                 message={message}
                 backgroundImagePath={backgroundImagePath}
                 avatarImagePath={avatarImagePath}
+                initialAvatarState={this.scaleAvatar(avatarState, imageSize, IMAGE_DOWNLOAD_SIZE)}
                 doneLoadingImages={this.downloadStarter}
             />
         );
@@ -106,21 +116,33 @@ class App extends React.Component {
         }
     };
 
+    scaleAvatar = (avatar, oldCanvasSize, newCanvasSize) => ({
+        x: avatar.x * (newCanvasSize / oldCanvasSize),
+        y: avatar.y * (newCanvasSize / oldCanvasSize),
+        width: avatar.width * (newCanvasSize / oldCanvasSize),
+        height: avatar.height * (newCanvasSize / oldCanvasSize),
+    });
+
+    updateAvatarState = (avatar) => {
+        this.setState({ avatarState: avatar });
+    };
+
     updateGenerator = (data) => {
         const newState = {};
         const {
-            name, title, message, background,
+            name, title, message, background, avatar,
         } = data;
         if (name) { newState.name = name; }
         if (title) { newState.title = title; }
         if (message) { newState.message = message; }
+        if (avatar) { newState.avatarImagePath = avatar.src; }
         newState.backgroundImagePath = background;
         this.setState(newState);
     };
 
     render() {
         const {
-            imageSize, name, title, message, backgroundImagePath, avatarImagePath,
+            imageSize, name, title, message, backgroundImagePath, avatarImagePath, avatarState,
         } = this.state;
         return (
             <ThemeProvider theme={theme}>
@@ -146,6 +168,8 @@ class App extends React.Component {
                                 message={message}
                                 backgroundImagePath={backgroundImagePath}
                                 avatarImagePath={avatarImagePath}
+                                initialAvatarState={avatarState}
+                                updateAvatarState={this.updateAvatarState}
                             />
                             <div className="Download">
                                 <Button

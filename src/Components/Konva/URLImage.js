@@ -1,54 +1,78 @@
 import React from 'react';
 import { Image } from 'react-konva';
-
+import PropTypes from 'prop-types';
 
 class URLImage extends React.Component {
-    state = {
-        image: null
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            image: null,
+        };
+    }
+
     componentDidMount() {
         this.loadImage();
     }
+
     componentDidUpdate(oldProps) {
-        if (oldProps.src !== this.props.src) {
+        const { src } = this.props;
+        if (oldProps.src !== src) {
             this.loadImage();
         }
     }
+
     componentWillUnmount() {
         this.image.removeEventListener('load', this.handleLoad);
     }
 
+    handleLoad = () => {
+        const { finishLoad } = this.props;
+        this.setState(
+            { image: this.image },
+            () => { finishLoad(); },
+        );
+    };
+
     loadImage() {
         // save to "this" to remove "load" handler on unmount
-        this.props.startLoad();
+        const { src, startLoad } = this.props;
+        startLoad();
         this.image = new window.Image();
-        this.image.src = this.props.src;
+        this.image.src = src;
         this.image.addEventListener('load', this.handleLoad);
     }
-    handleLoad = () => {
-        // after setState react-konva will update canvas and redraw the layer
-        // because "image" property is changed
-        this.setState(
-            {image: this.image},
-            () => {this.props.finishLoad()});
-        // if you keep same image object during source updates
-        // you will have to update layer manually:
-        // this.imageNode.getLayer().batchDraw();
-    };
+
     render() {
+        const { x, y, width, height, draggable } = this.props;
+        const { image } = this.state;
         return (
             <Image
-                x={this.props.x}
-                y={this.props.y}
-                width={this.props.width}
-                height={this.props.height}
-                image={this.state.image}
-                ref={node => {
+                x={x}
+                y={y}
+                width={width}
+                height={height}
+                image={image}
+                draggable={draggable}
+                ref={(node) => {
                     this.imageNode = node;
                 }}
             />
         );
     }
 }
+
+URLImage.propTypes = {
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    draggable: PropTypes.bool,
+    src: PropTypes.string.isRequired,
+    finishLoad: PropTypes.func.isRequired,
+    startLoad: PropTypes.func.isRequired,
+};
+URLImage.defaultProps = {
+    draggable: false,
+};
 
 export default URLImage;
