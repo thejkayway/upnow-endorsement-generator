@@ -4,13 +4,13 @@
 }
 
 @font-face {
-  font-family: 'Open Sans Bold Italic';
-  src: local('Open Sans'), url(./resources/fonts/OpenSans-SemiBoldItalic.ttf) format('truetype');
+  font-family: 'Open Sans Italic';
+  src: local('Open Sans'), url(./resources/fonts/OpenSans-Italic.ttf) format('truetype');
 }
 
 @font-face {
-  font-family: 'Open Sans Semibold';
-  src: local('Open Sans'), url(./resources/fonts/OpenSans-SemiBold.ttf) format('truetype');
+  font-family: 'Open Sans Bold Italic';
+  src: local('Open Sans'), url(./resources/fonts/OpenSans-SemiBoldItalic.ttf) format('truetype');
 }
 
 body {

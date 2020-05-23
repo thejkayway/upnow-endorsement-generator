@@ -33,7 +33,7 @@ const DOWNLOAD_NAME = 'endorsement.png';
 const fontObservers = [
     new FontFaceObserver('Open Sans'),
     new FontFaceObserver('Open Sans Bold Italic'),
-    new FontFaceObserver('Open Sans Semibold'),
+    new FontFaceObserver('Open Sans Italic'),
 ];
 
 class App extends React.Component {

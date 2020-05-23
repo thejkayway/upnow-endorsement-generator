@@ -175,7 +175,7 @@ class Generator extends React.Component {
             y: imageSize * 0.555,
             width: imageSize * 0.75,
             fontSize: imageSize * 0.0391,
-            fontFamily: 'Open Sans Bold Italic',
+            fontFamily: 'Open Sans Italic',
             fill: 'rgb(60,60,60)',
             wrap: 'word',
             preventDefault: false,
@@ -183,13 +183,13 @@ class Generator extends React.Component {
         const text = new Konva.Text({ ...textProps });
         return (
             <Text
-                text={` - ${name}, ${title}`}
+                text={`- ${name}, ${title}`}
                 x={textProps.x}
                 y={(imageSize * 0.565) + text.height()}
                 width={imageSize * 0.75}
                 fontSize={imageSize * 0.033}
-                padding={imageSize * 0.008}
-                fontFamily="Open Sans Semibold"
+                padding={imageSize * 0.01}
+                fontFamily="Open Sans"
                 fill={textProps.fill}
                 wrap={textProps.wrap}
                 preventDefault={textProps.preventDefault}
@@ -342,7 +342,7 @@ class Generator extends React.Component {
                 y={imageSize * 0.555}
                 width={imageSize * 0.75}
                 fontSize={imageSize * 0.0391}
-                fontFamily="Open Sans Bold Italic"
+                fontFamily="Open Sans Italic"
                 fill="rgb(60,60,60)"
                 wrap="word"
                 preventDefault={false}
