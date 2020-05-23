@@ -47,7 +47,11 @@ const backgroundImages = [
 class GeneratorForm extends React.Component {
     constructor(props) {
         super(props);
+        const { initialName, initialTitle, initialMessage } = this.props;
         this.state = {
+            name: initialName,
+            title: initialTitle,
+            message: initialMessage,
             images: backgroundImages,
         };
     }
@@ -84,12 +88,10 @@ class GeneratorForm extends React.Component {
 
     handleChange = (event) => {
         const { name, value } = event.target;
-        if (value !== '') {
-            this.setState(
-                { [name]: value },
-                this.handleSubmit(event),
-            );
-        }
+        this.setState(
+            { [name]: value },
+            this.handleSubmit(event),
+        );
     }
 
     onPickBackground = (event) => {
@@ -113,6 +115,7 @@ class GeneratorForm extends React.Component {
 
     render() {
         const { images } = this.state;
+        const { initialName, initialTitle, initialMessage } = this.props;
         return (
             <form className="Generator-form" onSubmit={this.handleSubmit}>
                 <div className="Generator-form-textEntry">
@@ -121,15 +124,20 @@ class GeneratorForm extends React.Component {
                         name="name"
                         variant="outlined"
                         size="small"
+                        defaultValue={initialName}
                         onChange={this.handleChange}
                     />
                 </div>
                 <div className="Generator-form-textEntry">
-                    <span className="Generator-form-label">Title</span>
+                    <span className="Generator-form-label">
+                        Title
+                        <span className="Generator-form-helpText"> (optional)</span>
+                    </span>
                     <TextField
                         name="title"
                         variant="outlined"
                         size="small"
+                        defaultValue={initialTitle}
                         onChange={this.handleChange}
                     />
                 </div>
@@ -147,6 +155,7 @@ class GeneratorForm extends React.Component {
                         variant="outlined"
                         multiline
                         rows={3}
+                        defaultValue={initialMessage}
                         onChange={this.handleChange}
                     />
                 </div>

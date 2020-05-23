@@ -153,9 +153,9 @@ class App extends React.Component {
         const {
             name, title, message, background, avatar,
         } = data;
-        if (name) { newState.name = name; }
-        if (title) { newState.title = title; }
-        if (message) { newState.message = message; }
+        newState.name = name;
+        newState.title = title;
+        newState.message = message;
         if (avatar) {
             this.avatarHelpText = (
                 <span
@@ -187,6 +187,9 @@ class App extends React.Component {
                     <div className="Content">
                         <div className="Config">
                             <GeneratorForm
+                                initialName={name}
+                                initialTitle={title}
+                                initialMessage={message}
                                 updateGenerator={this.updateGenerator}
                             />
                         </div>

@@ -28,6 +28,11 @@
     margin-right: 1rem;
 }
 
+.Generator-form-helpText {
+    font-size: 0.7rem;
+    font-style: italic;
+}
+
 .image_picker {
     display: grid;
     grid-template-columns: 1fr 1fr;

@@ -184,12 +184,18 @@ class Generator extends React.Component {
             wrap: 'word',
             preventDefault: false,
         };
-        const text = new Konva.Text({ ...textProps });
+        const measuringText = new Konva.Text({ ...textProps });
+        let titleText;
+        if (name) {
+            titleText = title === '' ? `- ${name}` : `- ${name}, ${title}`;
+        } else {
+            titleText = '';
+        }
         return (
             <Text
-                text={`- ${name}, ${title}`}
+                text={titleText}
                 x={textProps.x}
-                y={(imageSize * 0.565) + text.height()}
+                y={(imageSize * 0.565) + measuringText.height()}
                 width={imageSize * 0.75}
                 fontSize={imageSize * 0.033}
                 padding={this.padding}
