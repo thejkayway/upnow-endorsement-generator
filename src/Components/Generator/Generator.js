@@ -61,14 +61,13 @@ class Generator extends React.Component {
         const measuringElement = new Konva.Text({
             x: 0,
             y: 0,
-            fontSize: imageSize * 0.06,
-            padding: imageSize * 0.006,
-            fontFamily: 'Nunito',
-            fontStyle: 'bold',
+            fontSize: imageSize * 0.055,
+            padding: imageSize * 0.008,
+            fontFamily: 'Open Sans Bold Italic',
             text: '    endorses    ',
         });
         const textWidth = measuringElement.getClientRect().width;
-        const textHeight = 2 * (imageSize * 0.006) + imageSize * 0.06;
+        const textHeight = 2 * (imageSize * 0.008) + imageSize * 0.06;
         return (
             <Label
                 x={imageSize * 0.24}
@@ -95,12 +94,14 @@ class Generator extends React.Component {
                 </Group>
                 <Text
                     text="    endorses    "
-                    fontSize={imageSize * 0.06}
-                    fontFamily="Nunito"
-                    fontStyle="bold"
+                    fontSize={imageSize * 0.055}
+                    fontFamily="Open Sans Bold Italic"
                     fill="white"
-                    skew={{ y: -0.274 }}
-                    padding={imageSize * 0.006}
+                    skew={{
+                        x: 0.21,
+                        y: -0.274,
+                    }}
+                    padding={imageSize * 0.008}
                     preventDefault={false}
                 />
             </Label>
@@ -113,16 +114,15 @@ class Generator extends React.Component {
             x: 0,
             y: 0,
             skew: { y: -0.274 },
-            fontSize: imageSize * 0.06,
-            padding: imageSize * 0.006,
-            fontFamily: 'Nunito',
-            fontStyle: 'bold',
+            fontSize: imageSize * 0.055,
+            padding: imageSize * 0.008,
+            fontFamily: 'Open Sans Bold Italic',
             text: `    ${name}    `,
         });
         const nameCenterX = imageSize * 0.42;
         const nameCenterY = imageSize * 0.245;
         const textWidth = nameElement.getClientRect().width;
-        const textHeight = 2 * (imageSize * 0.006) + imageSize * 0.06;
+        const textHeight = 2 * (imageSize * 0.008) + imageSize * 0.055;
         const displacedX = nameCenterX - textWidth / 2;
         const displacedY = nameCenterY - (-0.137 * textWidth);
         return (
@@ -152,13 +152,14 @@ class Generator extends React.Component {
                     </Group>
                     <Text
                         text={`    ${name}    `}
-                        align="right"
-                        fontSize={imageSize * 0.06}
-                        fontFamily="Nunito"
-                        fontStyle="bold"
+                        fontSize={imageSize * 0.055}
+                        fontFamily="Open Sans Bold Italic"
                         fill="white"
-                        skew={{ y: -0.274 }}
-                        padding={imageSize * 0.006}
+                        skew={{
+                            x: 0.21,
+                            y: -0.274,
+                        }}
+                        padding={imageSize * 0.008}
                         preventDefault={false}
                     />
                 </Label>
@@ -170,12 +171,11 @@ class Generator extends React.Component {
         const { imageSize } = this.props;
         const textProps = {
             text: bodyMessage,
-            x: imageSize * 0.145,
+            x: imageSize * 0.13,
             y: imageSize * 0.555,
-            width: imageSize * 0.7566,
+            width: imageSize * 0.75,
             fontSize: imageSize * 0.0391,
-            fontFamily: 'Roboto',
-            fontStyle: 'italic',
+            fontFamily: 'Open Sans Italic',
             fill: 'rgb(60,60,60)',
             wrap: 'word',
             preventDefault: false,
@@ -186,8 +186,10 @@ class Generator extends React.Component {
                 text={` - ${name}, ${title}`}
                 x={textProps.x}
                 y={(imageSize * 0.565) + text.height()}
-                fontSize={imageSize * 0.035}
-                fontFamily={textProps.fontFamily}
+                width={imageSize * 0.75}
+                fontSize={imageSize * 0.033}
+                padding={imageSize * 0.008}
+                fontFamily="Open Sans Semibold"
                 fill={textProps.fill}
                 wrap={textProps.wrap}
                 preventDefault={textProps.preventDefault}
@@ -280,8 +282,8 @@ class Generator extends React.Component {
                 <URLImage
                     x={imageSize * 0.0167}
                     y={imageSize * 0.5}
-                    width={imageSize * 0.11}
-                    height={imageSize * 0.11}
+                    width={imageSize * 0.1}
+                    height={imageSize * 0.1}
                     src={quotationMarkPath}
                     startLoad={this.startLoadImage}
                     finishLoad={this.finishLoadImage}
@@ -290,8 +292,8 @@ class Generator extends React.Component {
                 <URLImage
                     x={imageSize * 0.98}
                     y={imageSize * 0.94}
-                    width={imageSize * 0.11}
-                    height={imageSize * 0.11}
+                    width={imageSize * 0.1}
+                    height={imageSize * 0.1}
                     scaleX={-1}
                     scaleY={-1}
                     src={quotationMarkPath}
@@ -336,12 +338,11 @@ class Generator extends React.Component {
         const textBody = (
             <Text
                 text={message}
-                x={imageSize * 0.145}
+                x={imageSize * 0.132}
                 y={imageSize * 0.555}
-                width={imageSize * 0.7566}
+                width={imageSize * 0.75}
                 fontSize={imageSize * 0.0391}
-                fontFamily="Roboto"
-                fontStyle="italic"
+                fontFamily="Open Sans Italic"
                 fill="rgb(60,60,60)"
                 wrap="word"
                 preventDefault={false}
@@ -365,7 +366,7 @@ class Generator extends React.Component {
                         x={imageSize * 0.06}
                         y={imageSize * 0.967}
                         fontSize={imageSize * 0.03}
-                        fontFamily="Roboto"
+                        fontFamily="Open Sans"
                         preventDefault={false}
                     />
                 </>),
@@ -386,14 +387,14 @@ class Generator extends React.Component {
                         x={imageSize * 0.42}
                         y={imageSize * 0.967}
                         fontSize={imageSize * 0.03}
-                        fontFamily="Roboto"
+                        fontFamily="Open Sans"
                         preventDefault={false}
                     />
                 </>),
             instagram: (
                 <>
                     <URLImage
-                        x={imageSize * 0.685}
+                        x={imageSize * 0.695}
                         y={imageSize * 0.964}
                         width={imageSize * 0.03}
                         height={imageSize * 0.03}
@@ -404,10 +405,10 @@ class Generator extends React.Component {
                     />
                     <Text
                         text="UPNOWMULTCO"
-                        x={imageSize * 0.72}
+                        x={imageSize * 0.73}
                         y={imageSize * 0.967}
                         fontSize={imageSize * 0.03}
-                        fontFamily="Roboto"
+                        fontFamily="Open Sans"
                         preventDefault={false}
                     />
                 </>),
