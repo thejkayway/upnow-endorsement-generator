@@ -74,8 +74,8 @@ class Generator extends React.Component {
         const textHeight = (2 * this.padding) + this.headingFontHeight;
         return (
             <Label
-                x={imageSize * 0.24}
-                y={imageSize * 0.385}
+                x={imageSize * 0.25}
+                y={imageSize * 0.38}
             >
                 <Group
                     clipFunc={(ctx) => {
