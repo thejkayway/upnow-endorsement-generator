@@ -14,7 +14,7 @@ import twitterLogoPath from '../../resources/generator/images/twitterLogo.png';
 class Generator extends React.Component {
     constructor(props) {
         super(props);
-        const { initialAvatarState } = this.props;
+        const { initialAvatarState, imageSize } = this.props;
         this.imageCount = 0;
         this.state = {
             avatarState: initialAvatarState,
@@ -22,6 +22,10 @@ class Generator extends React.Component {
         };
         this.trRef = React.createRef();
         this.shapeRef = React.createRef();
+
+        // Reusable config for canvas elements
+        this.padding = imageSize * 0.015;
+        this.headingFontHeight = imageSize * 0.055;
     }
 
     componentDidUpdate() {
@@ -61,28 +65,28 @@ class Generator extends React.Component {
         const measuringElement = new Konva.Text({
             x: 0,
             y: 0,
-            fontSize: imageSize * 0.055,
-            padding: imageSize * 0.008,
+            fontSize: this.headingFontHeight,
+            padding: this.padding,
             fontFamily: 'Open Sans Bold Italic',
-            text: '    endorses    ',
+            text: '    endorses     ',
         });
         const textWidth = measuringElement.getClientRect().width;
-        const textHeight = 2 * (imageSize * 0.008) + imageSize * 0.06;
+        const textHeight = (2 * this.padding) + this.headingFontHeight;
         return (
             <Label
                 x={imageSize * 0.24}
-                y={imageSize * 0.378}
+                y={imageSize * 0.385}
             >
                 <Group
                     clipFunc={(ctx) => {
                         ctx.beginPath();
                         ctx.moveTo(0, 0);
-                        ctx.lineTo(imageSize * 0.02, textHeight * 0.4);
-                        ctx.lineTo(0, textHeight);
+                        ctx.lineTo(imageSize * 0.03, textHeight * 0.4);
+                        ctx.lineTo(imageSize * 0.02, textHeight);
                         ctx.lineTo(textWidth, -0.274 * textWidth + textHeight);
-                        ctx.lineTo(textWidth - imageSize * 0.02,
-                            -0.274 * textWidth + textHeight * 0.6);
-                        ctx.lineTo(textWidth, -0.274 * textWidth);
+                        ctx.lineTo(textWidth - imageSize * 0.03,
+                            -0.274 * textWidth + textHeight * 0.62);
+                        ctx.lineTo(textWidth - imageSize * 0.02, -0.274 * textWidth);
                         ctx.closePath();
                     }}
                 >
@@ -93,15 +97,15 @@ class Generator extends React.Component {
                     />
                 </Group>
                 <Text
-                    text="    endorses    "
-                    fontSize={imageSize * 0.055}
+                    text="    endorses     "
+                    fontSize={this.headingFontHeight}
                     fontFamily="Open Sans Bold Italic"
                     fill="white"
                     skew={{
                         x: 0.21,
                         y: -0.274,
                     }}
-                    padding={imageSize * 0.008}
+                    padding={this.padding}
                     preventDefault={false}
                 />
             </Label>
@@ -114,15 +118,15 @@ class Generator extends React.Component {
             x: 0,
             y: 0,
             skew: { y: -0.274 },
-            fontSize: imageSize * 0.055,
-            padding: imageSize * 0.008,
+            fontSize: this.headingFontHeight,
+            padding: this.padding,
             fontFamily: 'Open Sans Bold Italic',
-            text: `    ${name}    `,
+            text: `    ${name}     `,
         });
         const nameCenterX = imageSize * 0.42;
-        const nameCenterY = imageSize * 0.245;
+        const nameCenterY = imageSize * 0.24;
         const textWidth = nameElement.getClientRect().width;
-        const textHeight = 2 * (imageSize * 0.008) + imageSize * 0.055;
+        const textHeight = (2 * this.padding) + this.headingFontHeight;
         const displacedX = nameCenterX - textWidth / 2;
         const displacedY = nameCenterY - (-0.137 * textWidth);
         return (
@@ -135,12 +139,12 @@ class Generator extends React.Component {
                         clipFunc={(ctx) => {
                             ctx.beginPath();
                             ctx.moveTo(0, 0);
-                            ctx.lineTo(imageSize * 0.02, textHeight * 0.4);
-                            ctx.lineTo(0, textHeight);
+                            ctx.lineTo(imageSize * 0.03, textHeight * 0.4);
+                            ctx.lineTo(imageSize * 0.02, textHeight);
                             ctx.lineTo(textWidth, -0.274 * textWidth + textHeight);
-                            ctx.lineTo(textWidth - imageSize * 0.02,
+                            ctx.lineTo(textWidth - imageSize * 0.03,
                                 -0.274 * textWidth + textHeight * 0.6);
-                            ctx.lineTo(textWidth, -0.274 * textWidth);
+                            ctx.lineTo(textWidth - textWidth * 0.04, -0.274 * textWidth);
                             ctx.closePath();
                         }}
                     >
@@ -151,15 +155,15 @@ class Generator extends React.Component {
                         />
                     </Group>
                     <Text
-                        text={`    ${name}    `}
-                        fontSize={imageSize * 0.055}
+                        text={`    ${name}     `}
+                        fontSize={this.headingFontHeight}
                         fontFamily="Open Sans Bold Italic"
                         fill="white"
                         skew={{
                             x: 0.21,
                             y: -0.274,
                         }}
-                        padding={imageSize * 0.008}
+                        padding={this.padding}
                         preventDefault={false}
                     />
                 </Label>
@@ -188,7 +192,7 @@ class Generator extends React.Component {
                 y={(imageSize * 0.565) + text.height()}
                 width={imageSize * 0.75}
                 fontSize={imageSize * 0.033}
-                padding={imageSize * 0.01}
+                padding={this.padding}
                 fontFamily="Open Sans"
                 fill={textProps.fill}
                 wrap={textProps.wrap}
