@@ -136,7 +136,16 @@ class App extends React.Component {
         if (name) { newState.name = name; }
         if (title) { newState.title = title; }
         if (message) { newState.message = message; }
-        if (avatar) { newState.avatarImagePath = avatar.src; }
+        if (avatar) {
+            this.avatarHelpText = (
+                <span
+                    className="Generator-helpText"
+                >
+                    Click or tap on your photo in the image above to edit.
+                </span>
+            );
+            newState.avatarImagePath = avatar.src;
+        }
         newState.backgroundImagePath = background;
         this.setState(newState);
     };
@@ -173,6 +182,7 @@ class App extends React.Component {
                                 initialAvatarState={avatarState}
                                 updateAvatarState={this.updateAvatarState}
                             />
+                            {this.avatarHelpText}
                             <div className="Download">
                                 <Button
                                     variant="contained"

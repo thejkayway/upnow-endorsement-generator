@@ -47,3 +47,7 @@
   flex: 4 4 auto;
   margin: 1rem;
 }
+
+.Generator-helpText {
+  margin-bottom: 0.8rem;
+}
