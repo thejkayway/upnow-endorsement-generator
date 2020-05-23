@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import FontFaceObserver from 'fontfaceobserver';
 import './App.css';
 
 import GeneratorForm from './Components/UI/GeneratorForm';
@@ -29,6 +30,11 @@ const IMAGE_SIZE = {
 };
 const IMAGE_DOWNLOAD_SIZE = 1024;
 const DOWNLOAD_NAME = 'endorsement.png';
+const fontObservers = [
+    new FontFaceObserver('Open Sans'),
+    new FontFaceObserver('Open Sans Bold Italic'),
+    new FontFaceObserver('Open Sans Semibold'),
+];
 
 class App extends React.Component {
     constructor(props) {
@@ -50,13 +56,15 @@ class App extends React.Component {
             avatarImagePath: defaultAvatarPath,
             avatarState: defaultAvatar,
             imageSize,
+            fontsLoaded: false,
         };
         this.canvasRef = React.createRef();
         this.downloadRef = React.createRef();
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         window.addEventListener('resize', this.handleResize);
+        this.generateAfterFontsLoaded();
     }
 
     determineCanvasSize = (windowWidth) => {
@@ -109,6 +117,13 @@ class App extends React.Component {
         this.downloadFromURI(layer.toDataURL());
     }
 
+    generateAfterFontsLoaded = async () => {
+        const promises = [];
+        fontObservers.forEach((font) => promises.push(font.load()));
+        await Promise.all(promises);
+        this.setState({ fontsLoaded: true });
+    };
+
     handleResize = () => {
         const { imageSize: previousSize } = this.state;
         const newSize = this.determineCanvasSize(window.innerWidth);
@@ -152,7 +167,8 @@ class App extends React.Component {
 
     render() {
         const {
-            imageSize, name, title, message, backgroundImagePath, avatarImagePath, avatarState,
+            imageSize, name, title, message,
+            backgroundImagePath, avatarImagePath, avatarState, fontsLoaded,
         } = this.state;
         return (
             <ThemeProvider theme={theme}>
@@ -169,31 +185,33 @@ class App extends React.Component {
                                 updateGenerator={this.updateGenerator}
                             />
                         </div>
-                        <div className="Generator">
-                            <Generator
-                                imageSize={imageSize}
-                                ref={this.canvasRef}
-                                name={name}
-                                title={title}
-                                message={message}
-                                backgroundImagePath={backgroundImagePath}
-                                avatarImagePath={avatarImagePath}
-                                logoPath={logo}
-                                initialAvatarState={avatarState}
-                                updateAvatarState={this.updateAvatarState}
-                            />
-                            {this.avatarHelpText}
-                            <div className="Download">
-                                <Button
-                                    variant="contained"
-                                    size="large"
-                                    color="primary"
-                                    onClick={this.downloadHandler}
-                                >
-                                    Download
-                                </Button>
+                        {fontsLoaded && (
+                            <div className="Generator">
+                                <Generator
+                                    imageSize={imageSize}
+                                    ref={this.canvasRef}
+                                    name={name}
+                                    title={title}
+                                    message={message}
+                                    backgroundImagePath={backgroundImagePath}
+                                    avatarImagePath={avatarImagePath}
+                                    logoPath={logo}
+                                    initialAvatarState={avatarState}
+                                    updateAvatarState={this.updateAvatarState}
+                                />
+                                {this.avatarHelpText}
+                                <div className="Download">
+                                    <Button
+                                        variant="contained"
+                                        size="large"
+                                        color="primary"
+                                        onClick={this.downloadHandler}
+                                    >
+                                        Download
+                                    </Button>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                 </div>
             </ThemeProvider>
