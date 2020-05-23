@@ -175,7 +175,7 @@ class Generator extends React.Component {
             y: imageSize * 0.555,
             width: imageSize * 0.75,
             fontSize: imageSize * 0.0391,
-            fontFamily: 'Open Sans Italic',
+            fontFamily: 'Open Sans Bold Italic',
             fill: 'rgb(60,60,60)',
             wrap: 'word',
             preventDefault: false,
@@ -342,7 +342,7 @@ class Generator extends React.Component {
                 y={imageSize * 0.555}
                 width={imageSize * 0.75}
                 fontSize={imageSize * 0.0391}
-                fontFamily="Open Sans Italic"
+                fontFamily="Open Sans Bold Italic"
                 fill="rgb(60,60,60)"
                 wrap="word"
                 preventDefault={false}
