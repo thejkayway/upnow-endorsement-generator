@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stage, Layer, Rect, Text, Circle, Label, Tag, Group } from 'react-konva';
+import { Stage, Layer, Rect, Text, Circle, Label, Tag, Group, Transformer } from 'react-konva';
 import Konva from 'konva';
 import PropTypes from 'prop-types';
 import URLImage from '../Konva/URLImage';
@@ -11,31 +11,6 @@ import instaLogoPath from '../../resources/generator/images/instaLogo.png';
 import internetLogoPath from '../../resources/generator/images/wwwLogo.png';
 import twitterLogoPath from '../../resources/generator/images/twitterLogo.png';
 
-/** Image Position (based off 600x600)
- *
- * Background
- *   height     291
- *
- * Avatar
- *   x          86
- *   y          26
- *   diameter   168
- *
- * Upnow Logo
- *   x          382
- *   y          116
- *   diameter   168
- *
- * Body Text
- *   x          96
- *   y          333
- *   width      454
- *
- * Base Bar
- *   height     24
-*/
-
-
 class Generator extends React.Component {
     constructor(props) {
         super(props);
@@ -45,7 +20,17 @@ class Generator extends React.Component {
             avatarState: initialAvatarState,
             selectedId: null,
         };
-        this.transformerRef = React.createRef();
+        this.trRef = React.createRef();
+        this.shapeRef = React.createRef();
+    }
+
+    componentDidUpdate() {
+        const { selectedId } = this.state;
+        if (selectedId === 'avatar') {
+            // we need to attach transformer manually
+            this.trRef.current.nodes([this.shapeRef.current]);
+            this.trRef.current.getLayer().batchDraw();
+        }
     }
 
     checkDeselect = (e) => {
@@ -210,6 +195,10 @@ class Generator extends React.Component {
         );
     }
 
+    updateShapeRef = (ref) => {
+        this.shapeRef = ref;
+    }
+
     render() {
         const {
             name,
@@ -235,7 +224,6 @@ class Generator extends React.Component {
                 ref={this.transformerRef}
                 startLoad={this.startLoadImage}
                 finishLoad={this.finishLoadImage}
-                isSelected={selectedId === 'avatar'}
                 onSelect={() => {
                     this.setState({ selectedId: 'avatar' });
                 }}
@@ -243,6 +231,7 @@ class Generator extends React.Component {
                     this.setState({ avatarState: newAttrs });
                     updateAvatarState(newAttrs);
                 }}
+                updateShapeRef={this.updateShapeRef}
                 preventDefault={false}
             />
         );
@@ -426,6 +415,18 @@ class Generator extends React.Component {
         const textName = this.positionedName(name);
         const textSupport = this.positionedEndorses();
         const textTitle = this.positionedTitle(title, name, message);
+        const transformer = (
+            <Transformer
+                ref={this.trRef}
+                boundBoxFunc={(oldBox, newBox) => {
+                    // limit resize
+                    if (newBox.width < imageSize * 0.273 || newBox.height < imageSize * 0.273) {
+                        return oldBox;
+                    }
+                    return newBox;
+                }}
+            />
+        );
         return (
             <div className="Generator">
                 <Stage
@@ -452,6 +453,7 @@ class Generator extends React.Component {
                         {avatarOutline}
                         {avatar}
                         {textName}
+                        {selectedId === 'avatar' && transformer}
                     </Layer>
                 </Stage>
             </div>

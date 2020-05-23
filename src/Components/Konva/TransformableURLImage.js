@@ -1,30 +1,23 @@
 import React from 'react';
-import { Group, Image, Transformer } from 'react-konva';
+import { Group, Image } from 'react-konva';
 import URLImage from './URLImage';
 
 class TransformableURLImage extends URLImage {
     constructor(props) {
         super(props);
-        // this.shapeRef = React.useRef();
-        // this.trRef = React.useRef();
         this.shapeRef = React.createRef();
         this.trRef = React.createRef();
     }
 
     componentDidUpdate(oldProps) {
         super.componentDidUpdate(oldProps);
-        const { isSelected } = this.props;
-        // const { shapeRef, trRef } = this.state;
-        if (isSelected) {
-            // we need to attach transformer manually
-            this.trRef.current.nodes([this.shapeRef.current]);
-            this.trRef.current.getLayer().batchDraw();
-        }
+        const { updateShapeRef } = this.props;
+        updateShapeRef(this.shapeRef);
     }
 
     render() {
         const { imageSize, x, y, width, height, draggable,
-            isSelected, onSelect, onChange } = this.props;
+            onSelect, onChange } = this.props;
         const { image } = this.state;
         return (
             <>
@@ -83,18 +76,6 @@ class TransformableURLImage extends URLImage {
                         ref={this.shapeRef}
                     />
                 </Group>
-                {isSelected && (
-                    <Transformer
-                        ref={this.trRef}
-                        boundBoxFunc={(oldBox, newBox) => {
-                            // limit resize
-                            if (newBox.width < 10 || newBox.height < 10) {
-                                return oldBox;
-                            }
-                            return newBox;
-                        }}
-                    />
-                )}
             </>
         );
     }
