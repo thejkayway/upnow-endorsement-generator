@@ -49,9 +49,14 @@ class App extends React.Component {
             draggable: true,
         };
         this.state = {
-            name: 'Rosa Luxemburg',
-            title: 'Activist',
-            message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tmpor incididunt ut labore et dolore magna aliqa. Ut enim ad minim venium, quis nostrud.',
+            name: 'Lady Buttermilk',
+            title: 'Cat',
+            message:
+`Meow
+
+            meow
+            
+    meow`,
             backgroundImagePath: defaultBackgroundPath,
             avatarImagePath: defaultAvatarPath,
             avatarState: defaultAvatar,
