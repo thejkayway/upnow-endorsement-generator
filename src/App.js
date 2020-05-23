@@ -9,7 +9,7 @@ import Generator from './Components/Generator/Generator';
 
 import logo from './resources/logo.png';
 import defaultAvatarPath from './resources/generator/images/defaultAvatar.png';
-import defaultBackgroundPath from './resources/generator/images/background1.png';
+import defaultBackgroundPath from './resources/generator/images/background1.jpg';
 
 const theme = createMuiTheme({
     palette: {

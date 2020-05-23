@@ -2,12 +2,12 @@ import React from 'react';
 import { Input, TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import ImageButtons from './ImageButtons';
-import background1 from '../../resources/generator/images/background1.png';
-import background2 from '../../resources/generator/images/background2.png';
-import background3 from '../../resources/generator/images/background3.png';
-import background4 from '../../resources/generator/images/background4.png';
-import background5 from '../../resources/generator/images/background5.png';
-import background6 from '../../resources/generator/images/background6.png';
+import background1 from '../../resources/generator/images/background1.jpg';
+import background2 from '../../resources/generator/images/background2.jpg';
+import background3 from '../../resources/generator/images/background3.jpg';
+import background4 from '../../resources/generator/images/background4.jpg';
+import background5 from '../../resources/generator/images/background5.jpg';
+import background6 from '../../resources/generator/images/background6.jpg';
 
 import './GeneratorForm.css';
 
