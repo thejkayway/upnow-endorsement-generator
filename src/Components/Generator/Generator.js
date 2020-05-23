@@ -418,6 +418,7 @@ class Generator extends React.Component {
         const transformer = (
             <Transformer
                 ref={this.trRef}
+                rotateEnabled={false}
                 boundBoxFunc={(oldBox, newBox) => {
                     // limit resize
                     if (newBox.width < imageSize * 0.273 || newBox.height < imageSize * 0.273) {
