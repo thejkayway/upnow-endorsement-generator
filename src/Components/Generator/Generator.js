@@ -87,7 +87,7 @@ class Generator extends React.Component {
                     }}
                 >
                     <Tag
-                        fill="rgb(213, 80, 42)"
+                        fill="rgb(231, 67, 17)"
                         skew={{ y: -0.274 }}
                         preventDefault={false}
                     />
@@ -145,7 +145,7 @@ class Generator extends React.Component {
                         }}
                     >
                         <Tag
-                            fill="rgb(213, 80, 42)"
+                            fill="rgb(231, 67, 17)"
                             skew={{ y: -0.274 }}
                             preventDefault={false}
                         />
@@ -265,7 +265,7 @@ class Generator extends React.Component {
                 y={0}
                 width={imageSize}
                 height={imageSize * 0.485}
-                fill="rgba(228, 189, 67, 0.45)"
+                fill="rgba(228, 189, 37, 0.6)"
                 preventDefault={false}
             />
         );
@@ -276,7 +276,7 @@ class Generator extends React.Component {
                     y={0}
                     height={imageSize}
                     width={imageSize}
-                    fill="rgb(253, 250, 242)"
+                    fill="rgb(254, 251, 242)"
                     preventDefault={false}
                 />
                 <URLImage
