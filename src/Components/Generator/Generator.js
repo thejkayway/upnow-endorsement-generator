@@ -143,8 +143,8 @@ class Generator extends React.Component {
                             ctx.lineTo(imageSize * 0.02, textHeight);
                             ctx.lineTo(textWidth, -0.274 * textWidth + textHeight);
                             ctx.lineTo(textWidth - imageSize * 0.03,
-                                -0.274 * textWidth + textHeight * 0.6);
-                            ctx.lineTo(textWidth - textWidth * 0.04, -0.274 * textWidth);
+                                -0.274 * textWidth + textHeight * 0.62);
+                            ctx.lineTo(textWidth - imageSize * 0.02, -0.274 * textWidth);
                             ctx.closePath();
                         }}
                     >
