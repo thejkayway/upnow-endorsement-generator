@@ -43,7 +43,7 @@ class URLImage extends React.Component {
     }
 
     render() {
-        const { x, y, width, height, draggable } = this.props;
+        const { x, y, width, height, draggable, scaleX, scaleY } = this.props;
         const { image } = this.state;
         return (
             <Image
@@ -51,11 +51,10 @@ class URLImage extends React.Component {
                 y={y}
                 width={width}
                 height={height}
+                scaleX={scaleX}
+                scaleY={scaleY}
                 image={image}
                 draggable={draggable}
-                ref={(node) => {
-                    this.imageNode = node;
-                }}
             />
         );
     }
@@ -66,6 +65,8 @@ URLImage.propTypes = {
     y: PropTypes.number.isRequired,
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
+    scaleX: PropTypes.number,
+    scaleY: PropTypes.number,
     draggable: PropTypes.bool,
     src: PropTypes.string.isRequired,
     finishLoad: PropTypes.func.isRequired,
@@ -73,6 +74,8 @@ URLImage.propTypes = {
 };
 URLImage.defaultProps = {
     draggable: false,
+    scaleX: 1,
+    scaleY: 1,
 };
 
 export default URLImage;

@@ -14,10 +14,10 @@ import defaultBackgroundPath from './resources/generator/images/background1.png'
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#484c54',
+            main: '#2a1a00',
         },
         secondary: {
-            main: '#838b9c',
+            main: '#f3c30e',
         },
     },
 });
@@ -35,10 +35,10 @@ class App extends React.Component {
         super(props);
         const imageSize = this.determineCanvasSize(window.innerWidth);
         const defaultAvatar = {
-            x: imageSize * 0.0391,
-            y: imageSize * 0.0391,
-            width: imageSize * 0.3125,
-            height: imageSize * 0.3125,
+            x: imageSize * 0.1433,
+            y: imageSize * 0.0433,
+            width: imageSize * 0.28,
+            height: imageSize * 0.28,
             id: 'avatar',
             draggable: true,
         };
@@ -88,6 +88,7 @@ class App extends React.Component {
                 message={message}
                 backgroundImagePath={backgroundImagePath}
                 avatarImagePath={avatarImagePath}
+                logoPath={logo}
                 initialAvatarState={this.scaleAvatar(avatarState, imageSize, IMAGE_DOWNLOAD_SIZE)}
                 doneLoadingImages={this.downloadStarter}
             />
@@ -168,6 +169,7 @@ class App extends React.Component {
                                 message={message}
                                 backgroundImagePath={backgroundImagePath}
                                 avatarImagePath={avatarImagePath}
+                                logoPath={logo}
                                 initialAvatarState={avatarState}
                                 updateAvatarState={this.updateAvatarState}
                             />

@@ -31,9 +31,9 @@ class TransformableURLImage extends URLImage {
                 <Group
                     clipFunc={(ctx) => {
                         ctx.arc(
-                            imageSize * 0.1953,
-                            imageSize * 0.1953,
-                            imageSize * 0.14945,
+                            imageSize * 0.2833,
+                            imageSize * 0.1833,
+                            imageSize * 0.1344,
                             0,
                             Math.PI * 2,
                         );
