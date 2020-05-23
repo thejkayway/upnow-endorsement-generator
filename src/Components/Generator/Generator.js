@@ -96,7 +96,8 @@ class Generator extends React.Component {
                         ctx.lineTo(imageSize * 0.02, textHeight * 0.4);
                         ctx.lineTo(0, textHeight);
                         ctx.lineTo(textWidth, -0.274 * textWidth + textHeight);
-                        ctx.lineTo(textWidth - imageSize * 0.02, -0.274 * textWidth + textHeight * 0.6);
+                        ctx.lineTo(textWidth - imageSize * 0.02,
+                            -0.274 * textWidth + textHeight * 0.6);
                         ctx.lineTo(textWidth, -0.274 * textWidth);
                         ctx.closePath();
                     }}
@@ -152,7 +153,8 @@ class Generator extends React.Component {
                             ctx.lineTo(imageSize * 0.02, textHeight * 0.4);
                             ctx.lineTo(0, textHeight);
                             ctx.lineTo(textWidth, -0.274 * textWidth + textHeight);
-                            ctx.lineTo(textWidth - imageSize * 0.02, -0.274 * textWidth + textHeight * 0.6);
+                            ctx.lineTo(textWidth - imageSize * 0.02,
+                                -0.274 * textWidth + textHeight * 0.6);
                             ctx.lineTo(textWidth, -0.274 * textWidth);
                             ctx.closePath();
                         }}
