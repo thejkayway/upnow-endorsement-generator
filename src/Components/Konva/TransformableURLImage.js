@@ -16,21 +16,13 @@ class TransformableURLImage extends URLImage {
     }
 
     render() {
-        const { imageSize, x, y, width, height, draggable,
+        const { clipFunc, x, y, width, height, draggable,
             onSelect, onChange } = this.props;
         const { image } = this.state;
         return (
             <>
                 <Group
-                    clipFunc={(ctx) => {
-                        ctx.arc(
-                            imageSize * 0.2833,
-                            imageSize * 0.1833,
-                            imageSize * 0.1344,
-                            0,
-                            Math.PI * 2,
-                        );
-                    }}
+                    clipFunc={clipFunc}
                 >
                     <Image
                         x={x}

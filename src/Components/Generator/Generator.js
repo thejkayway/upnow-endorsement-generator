@@ -14,18 +14,54 @@ import twitterLogoPath from '../../resources/generator/images/twitterLogo.png';
 class Generator extends React.Component {
     constructor(props) {
         super(props);
-        const { initialAvatarState, imageSize } = this.props;
+        const { imageSize, initialAvatarState } = this.props;
         this.imageCount = 0;
-        this.state = {
-            avatarState: initialAvatarState,
-            selectedId: null,
-        };
         this.trRef = React.createRef();
         this.shapeRef = React.createRef();
 
         // Reusable config for canvas elements
+
+        // "${Name} endorses" text
+        this.endorsementTextPosition = {
+            x: imageSize * 0.42,
+            y: imageSize * 0.21,
+        };
         this.padding = imageSize * 0.015;
-        this.headingFontHeight = imageSize * 0.055;
+        this.headingFontHeight = imageSize * 0.05;
+
+        // Avatar
+        this.avatarDiameter = imageSize * 0.28;
+        this.avatarPosition = {
+            x: imageSize * 0.05,
+            y: imageSize * 0.03,
+        };
+        const defaultAvatar = {
+            x: this.avatarPosition.x,
+            y: this.avatarPosition.y,
+            width: this.avatarDiameter,
+            height: this.avatarDiameter,
+            id: 'avatar',
+            draggable: true,
+        };
+
+        // Logo
+        this.logoDiameter = imageSize * 0.32;
+        this.logoPosition = {
+            x: imageSize * 0.65,
+            y: imageSize * 0.15,
+        };
+        this.state = {
+            avatarState: initialAvatarState || defaultAvatar,
+            selectedId: null,
+        };
+    }
+
+    componentDidMount() {
+        const { updateAvatarState } = this.props;
+        const { avatarState } = this.state;
+        if (updateAvatarState) {
+            updateAvatarState(avatarState);
+        }
     }
 
     componentDidUpdate() {
@@ -65,17 +101,20 @@ class Generator extends React.Component {
         const measuringElement = new Konva.Text({
             x: 0,
             y: 0,
+            skew: { y: -0.274 },
             fontSize: this.headingFontHeight,
             padding: this.padding,
             fontFamily: 'Open Sans Bold Italic',
             text: '    endorses     ',
         });
+        const endorsesCenterX = this.endorsementTextPosition.x + imageSize * 0.02;
+        const endorsesCenterY = this.endorsementTextPosition.y + imageSize * 0.09;
         const textWidth = measuringElement.getClientRect().width;
         const textHeight = (2 * this.padding) + this.headingFontHeight;
         return (
             <Label
-                x={imageSize * 0.25}
-                y={imageSize * 0.38}
+                x={endorsesCenterX - textWidth / 2}
+                y={endorsesCenterY + textHeight / 2}
             >
                 <Group
                     clipFunc={(ctx) => {
@@ -123,8 +162,8 @@ class Generator extends React.Component {
             fontFamily: 'Open Sans Bold Italic',
             text: `    ${name}     `,
         });
-        const nameCenterX = imageSize * 0.42;
-        const nameCenterY = imageSize * 0.24;
+        const nameCenterX = this.endorsementTextPosition.x;
+        const nameCenterY = this.endorsementTextPosition.y;
         const textWidth = nameElement.getClientRect().width;
         const textHeight = (2 * this.padding) + this.headingFontHeight;
         const displacedX = nameCenterX - textWidth / 2;
@@ -244,16 +283,25 @@ class Generator extends React.Component {
                     updateAvatarState(newAttrs);
                 }}
                 updateShapeRef={this.updateShapeRef}
+                clipFunc={(ctx) => {
+                    ctx.arc(
+                        this.avatarPosition.x + this.avatarDiameter / 2,
+                        this.avatarPosition.y + this.avatarDiameter / 2,
+                        this.avatarDiameter / 2,
+                        0,
+                        Math.PI * 2,
+                    );
+                }}
                 preventDefault={false}
             />
         );
         const avatarOutline = (
             <Circle
-                x={imageSize * 0.2833}
-                y={imageSize * 0.1833}
-                radius={imageSize * 0.14}
+                x={this.avatarPosition.x + this.avatarDiameter / 2}
+                y={this.avatarPosition.y + this.avatarDiameter / 2}
+                radius={this.avatarDiameter / 2}
                 stroke="white"
-                strokeWidth={imageSize * 0.0156}
+                strokeWidth={imageSize * 0.03}
                 preventDefault={false}
             />
         );
@@ -325,10 +373,10 @@ class Generator extends React.Component {
         );
         const logo = (
             <URLImage
-                x={imageSize * 0.6367}
-                y={imageSize * 0.1933}
-                width={imageSize * 0.28}
-                height={imageSize * 0.28}
+                x={this.logoPosition.x}
+                y={this.logoPosition.y}
+                width={this.logoDiameter}
+                height={this.logoDiameter}
                 src={upnowLogoPath}
                 startLoad={this.startLoadImage}
                 finishLoad={this.finishLoadImage}
@@ -337,9 +385,9 @@ class Generator extends React.Component {
         );
         const logoOutline = (
             <Circle
-                x={imageSize * 0.7767}
-                y={imageSize * 0.333}
-                radius={imageSize * 0.14}
+                x={this.logoPosition.x + this.logoDiameter / 2}
+                y={this.logoPosition.y + this.logoDiameter / 2}
+                radius={this.logoDiameter / 2}
                 stroke="white"
                 strokeWidth={imageSize * 0.0156}
                 preventDefault={false}
@@ -456,7 +504,6 @@ class Generator extends React.Component {
                         {backgroundTintedOverlay}
                         {logo}
                         {logoOutline}
-                        {textSupport}
                         {textBody}
                         {textTitle}
                         {textFooter.web}
@@ -465,6 +512,7 @@ class Generator extends React.Component {
                         {avatarOutline}
                         {avatar}
                         {textName}
+                        {textSupport}
                         {selectedId === 'avatar' && transformer}
                     </Layer>
                 </Stage>
@@ -485,7 +533,7 @@ Generator.propTypes = {
         height: PropTypes.number,
         id: PropTypes.string,
         draggable: PropTypes.bool,
-    }).isRequired,
+    }),
     forwardRef: PropTypes.shape({ current: PropTypes.any }).isRequired,
     backgroundImagePath: PropTypes.string.isRequired,
     avatarImagePath: PropTypes.string.isRequired,
@@ -495,6 +543,7 @@ Generator.propTypes = {
 Generator.defaultProps = {
     doneLoadingImages: null,
     updateAvatarState: null,
+    initialAvatarState: null,
 };
 // eslint-disable-next-line react/jsx-props-no-spreading
 export default React.forwardRef((props, ref) => <Generator {...props} forwardRef={ref} />);

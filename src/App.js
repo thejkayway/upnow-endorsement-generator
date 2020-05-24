@@ -40,14 +40,6 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         const imageSize = this.determineCanvasSize(window.innerWidth);
-        const defaultAvatar = {
-            x: imageSize * 0.1433,
-            y: imageSize * 0.0433,
-            width: imageSize * 0.28,
-            height: imageSize * 0.28,
-            id: 'avatar',
-            draggable: true,
-        };
         this.state = {
             name: 'Lady Buttermilk',
             title: 'Cat',
@@ -59,7 +51,6 @@ class App extends React.Component {
     meow`,
             backgroundImagePath: defaultBackgroundPath,
             avatarImagePath: defaultAvatarPath,
-            avatarState: defaultAvatar,
             imageSize,
             fontsLoaded: false,
         };

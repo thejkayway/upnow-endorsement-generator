@@ -177,6 +177,9 @@ class GeneratorForm extends React.Component {
 }
 GeneratorForm.propTypes = {
     updateGenerator: PropTypes.func.isRequired,
+    initialMessage: PropTypes.string.isRequired,
+    initialName: PropTypes.string.isRequired,
+    initialTitle: PropTypes.string.isRequired,
 };
 
 export default GeneratorForm;
