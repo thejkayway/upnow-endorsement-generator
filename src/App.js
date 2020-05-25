@@ -15,10 +15,10 @@ import defaultBackgroundPath from './resources/generator/images/background1.jpg'
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#2a1a00',
+            main: '#f3c30e',
         },
         secondary: {
-            main: '#f3c30e',
+            main: '#fff9e6',
         },
     },
 });
@@ -79,7 +79,7 @@ class App extends React.Component {
         return IMAGE_SIZE.medium;
     }
 
-    downloadHandler = async () => {
+    downloadHandler = () => {
         const {
             name, title, message, backgroundImagePath, avatarImagePath, avatarState, imageSize,
         } = this.state;
@@ -108,8 +108,12 @@ class App extends React.Component {
         link.click();
     };
 
-    downloadStarter = () => {
+    downloadStarter = async () => {
         const layer = this.downloadRef.current;
+
+        // upload generated image to upnow servers
+        await this.upload(layer.toDataURL(), 'https://upnow2020.org/uploadEndorsement');
+
         this.downloadFromURI(layer.toDataURL());
     }
 
@@ -161,6 +165,13 @@ class App extends React.Component {
         this.setState(newState);
     };
 
+    upload = async (file, url) => (
+        fetch(url, {
+            method: 'POST',
+            body: file,
+        })
+    );
+
     render() {
         const {
             imageSize, name, title, message,
@@ -169,8 +180,7 @@ class App extends React.Component {
         return (
             <ThemeProvider theme={theme}>
                 <div className="App">
-                    <header className="App-header" style={{ backgroundColor: theme.palette.primary.dark }}>
-                        <img src={logo} className="App-logo" alt="logo" />
+                    <header className="App-header" style={{ backgroundColor: theme.palette.primary.main }}>
                         <h2 className="App-title">
                             I support Universal Preschool NOW!
                         </h2>

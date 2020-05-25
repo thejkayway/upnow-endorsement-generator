@@ -67,9 +67,9 @@ const useStyles = makeStyles((theme) => ({
         bottom: 0,
         backgroundColor: 'rgba(255,255,255,0.2)',
         transition: theme.transitions.create('opacity'),
-        border: `7px solid ${theme.palette.secondary.main}`,
+        border: `7px solid ${theme.palette.primary.main}`,
         [theme.breakpoints.down('xs')]: {
-            border: `3px solid ${theme.palette.secondary.main}`,
+            border: `3px solid ${theme.palette.primary.main}`,
         },
     },
 }));
