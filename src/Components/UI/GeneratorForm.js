@@ -124,6 +124,7 @@ class GeneratorForm extends React.Component {
                         name="name"
                         variant="outlined"
                         size="small"
+                        style={{ background: 'white' }}
                         defaultValue={initialName}
                         onChange={this.handleChange}
                     />
@@ -137,6 +138,7 @@ class GeneratorForm extends React.Component {
                         name="title"
                         variant="outlined"
                         size="small"
+                        style={{ background: 'white' }}
                         defaultValue={initialTitle}
                         onChange={this.handleChange}
                     />
@@ -155,6 +157,7 @@ class GeneratorForm extends React.Component {
                         variant="outlined"
                         multiline
                         rows={3}
+                        style={{ background: 'white' }}
                         defaultValue={initialMessage}
                         onChange={this.handleChange}
                     />

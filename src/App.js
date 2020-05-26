@@ -21,6 +21,11 @@ const theme = createMuiTheme({
             main: '#fff9e6',
         },
     },
+    typography: {
+        textField: {
+            background: 'white',
+        },
+    },
 });
 const IMAGE_SIZE = {
     tiny: 250,
@@ -108,12 +113,8 @@ class App extends React.Component {
         link.click();
     };
 
-    downloadStarter = async () => {
+    downloadStarter = () => {
         const layer = this.downloadRef.current;
-
-        // upload generated image to upnow servers
-        await this.upload(layer.toDataURL(), 'https://upnow2020.org/uploadEndorsement');
-
         this.downloadFromURI(layer.toDataURL());
     }
 
@@ -165,13 +166,6 @@ class App extends React.Component {
         this.setState(newState);
     };
 
-    upload = async (file, url) => (
-        fetch(url, {
-            method: 'POST',
-            body: file,
-        })
-    );
-
     render() {
         const {
             imageSize, name, title, message,
@@ -195,7 +189,7 @@ class App extends React.Component {
                             />
                         </div>
                         {fontsLoaded && (
-                            <div className="Generator">
+                            <div className="Generator-display">
                                 <Generator
                                     imageSize={imageSize}
                                     ref={this.canvasRef}
@@ -214,6 +208,10 @@ class App extends React.Component {
                                         variant="contained"
                                         size="large"
                                         color="primary"
+                                        style={{
+                                            border: '1px solid black',
+                                            fontFamily: 'Nunito Bold',
+                                        }}
                                         onClick={this.downloadHandler}
                                     >
                                         Download
