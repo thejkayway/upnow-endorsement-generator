@@ -3,9 +3,9 @@
 }
 
 .App-logo {
-  height: 15vmin;
+  height: 6vmin;
   pointer-events: none;
-  margin: 1rem 0rem 1rem 1rem;
+  margin: 0.2rem 0 0.2rem 1rem;
 }
 
 .App-header {
@@ -52,7 +52,7 @@
 
 .Generator {
   margin: 1rem;
-  box-shadow: 0 0 0.8rem rgb(130, 130, 130);
+  border: 1px solid rgb(130, 130, 130);
 }
 
 .Generator-helpText {
